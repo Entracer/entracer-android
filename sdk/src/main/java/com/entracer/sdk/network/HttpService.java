@@ -23,24 +23,52 @@ import javax.net.ssl.HttpsURLConnection;
  */
 public class HttpService {
 
-    ResponseListener listener;
-    int responseCode;
+    private Request request;
+    private ResponseListener listener;
+    private int responseCode;
 
-    public JSONObject sendRequest(String requestUrl, RequestMethod method, JSONObject params, Map<String, String> headers)
+    /**
+     * Constructs http service instance with request object.
+     * @param request Request object.
+     * @param listener Response listener.
+     */
+    public HttpService(Request request, ResponseListener listener) {
+        this.request = request;
+        this.listener = listener;
+    }
+
+    /**
+     * Sends API request with request parameters.
+     * @throws Exception exception.
+     */
+    public void sendRequest() throws Exception {
+
+        Map<String, String> headers = this.buildHeaders(request.token);
+        this.sendRequest(request.requestUrl, request.method, request.data, headers);
+    }
+
+    /**
+     * Sends API request with request url, method, parameters, and headers.
+     * @param requestUrl request url.
+     * @param method request method.
+     * @param params post data parameters.
+     * @param headers api headers.
+     * @throws Exception exception.
+     */
+    private void sendRequest(final URL requestUrl, String method, Map<String, Object> params, Map<String, String> headers)
             throws Exception {
 
-        final URL url = new URL(requestUrl);
-        EntracerLog.d("Request method: " + method.value() + "url: " + requestUrl + " params: " + params.toString());
-        HttpsURLConnection connection = (HttpsURLConnection) url.openConnection();
+        EntracerLog.d("Request method: " + method + "url: " + requestUrl + " params: " + params.toString());
+        HttpsURLConnection connection = (HttpsURLConnection) requestUrl.openConnection();
 
         // sets request method, headers
-        connection.setRequestMethod(method.value());
+        connection.setRequestMethod(method);
         for (Map.Entry<String, String> entry : headers.entrySet())
         {
             connection.setRequestProperty(entry.getKey(), entry.getValue());
         }
 
-        if (method.value() != RequestMethod.GET) {
+        if (method != RequestMethod.GET) {
             connection.setDoOutput(true);
         }
         connection.setDoInput(true);
@@ -65,17 +93,17 @@ public class HttpService {
             EntracerLog.d("Response: " + responseObject.toString());
             in.close();
 
-            return responseObject;
+            this.request.responseObject = responseObject;
+            this.listener.onResponse(this.request);
         } else {
             // error response
             EntracerLog.e("Error Response for url: " + requestUrl);
-            return null;
+            this.listener.onFailure(this.request);
         }
     }
 
     /**
      * Builds request headers with api token.
-     *
      * @param token api token.
      * @return request headers.
      */

@@ -47,6 +47,9 @@ public class EntracerLog {
      * @param level log level.
      */
     public static void setLevel(int level) {
+        if (level > DEBUG) {
+            level = DEBUG;
+        }
         logLevel = level;
     }
 

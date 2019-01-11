@@ -7,7 +7,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URLEncoder;
+import java.util.Enumeration;
 import java.util.Iterator;
+import java.util.Map;
 
 /**
  * Utility class to help string processing.
@@ -16,7 +18,6 @@ public class StringUtils {
 
     /**
      * Converts an input stream to a string.
-     *
      * @param stream input stream to be converted.
      * @return string value.
      * @throws IOException exception.
@@ -24,18 +25,33 @@ public class StringUtils {
     public static String inputStreamToString(final InputStream stream) throws IOException {
 
         BufferedReader br = new BufferedReader(new InputStreamReader(stream));
+
         StringBuilder sb = new StringBuilder();
         String line = null;
+
         while ((line = br.readLine()) != null) {
             sb.append(line + "\n");
         }
         br.close();
+
         return sb.toString();
     }
 
     /**
+     * Returns a post data string from Map.
+     * @param params hashmap parameters.
+     * @return string to be used with POST request.
+     * @throws Exception exception.
+     */
+    public static String getPostDataString(Map<String, Object> params) throws Exception {
+
+        JSONObject jsonObject = new JSONObject(params);
+
+        return StringUtils.getPostDataString(jsonObject);
+    }
+
+    /**
      * Returns a post data string from JSONObject.
-     *
      * @param params json object parameters.
      * @return string to be used with POST request.
      * @throws Exception exception.

@@ -5,8 +5,8 @@ package com.entracer.sdk.network;
  */
 public interface ResponseListener {
 
-    public void onResponse();
+    public void onResponse(Request request);
 
-    public void onFailure();
+    public void onFailure(Request request);
 
 }
