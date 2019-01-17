@@ -116,7 +116,6 @@ public class EntracerAPI {
 
     }
 
-
     /**
      * Sends create or update person API request and notify the response listener.
      * @param person person instance.
