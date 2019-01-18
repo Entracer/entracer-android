@@ -87,15 +87,28 @@ public class EntracerAPI {
         return this.mToken;
     }
 
+    /**
+     * Sends trigger API request to trigger an event for a person and an organisation and notify the response listener.
+     * @param event eventID.
+     * @param personID
+     * @param organisationID
+     * @param channel
+     * @param listener response listener.
+     * @throws Exception exception.
+     */
+
     public void trigger(String event, String personID, String organisationID, String channel, ResponseListener listener) throws Exception {
 
         String base = Constants.API.BASE_PATH;
         String path = Constants.API.VERSION + Constants.EndPoints.EVENTS + event + Constants.EndPoints.TRIGGER;
 
         Map<String, Object> data = new HashMap<String, Object>();
+        data.put("name", event);
         data.put("person_id", personID);
         data.put("organisation_id", organisationID);
         data.put("channel", channel);
+        data.put("device", Constants.EventDevice.ANDROID);
+        data.put("os", Constants.EventChannel.MOBILE);
 
         Request eventRequest = new Request(mToken, base, path, "", RequestMethod.POST, data);
         HttpService service = new HttpService(eventRequest, listener);
