@@ -9,7 +9,7 @@ public class Constants {
      * API urls, and version.
      */
     public static class API {
-        public static final String BASE_PATH = "https://app.entracer.com";
+        public static final String BASE_PATH = "http://crm.orete.org";   //TODO changed https://app.entracer.com
         public static final String VERSION = "/api/v1";
         public static final String TAG = "Entracer";
     }

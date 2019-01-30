@@ -36,6 +36,7 @@ public class Request {
      */
     public Request(String token, String base, String path, String query, String method, Map<String, Object> data) {
 
+        this.token=token;  //TODO initialize token
         this.base = base;
         this.path = path;
         this.query = query;

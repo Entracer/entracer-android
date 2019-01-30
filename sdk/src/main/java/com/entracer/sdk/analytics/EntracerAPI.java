@@ -1,5 +1,6 @@
 package com.entracer.sdk.analytics;
 
+import com.entracer.sdk.model.Event;
 import com.entracer.sdk.model.Organisation;
 import com.entracer.sdk.model.Person;
 import com.entracer.sdk.network.HttpService;
@@ -100,17 +101,21 @@ public class EntracerAPI {
     public void trigger(String event, String personID, String organisationID, String channel, ResponseListener listener) throws Exception {
 
         String base = Constants.API.BASE_PATH;
-        String path = Constants.API.VERSION + Constants.EndPoints.EVENTS + event + Constants.EndPoints.TRIGGER;
+        String path = Constants.API.VERSION + Constants.EndPoints.EVENTS + "/" + event + Constants.EndPoints.TRIGGER;
 
+        Map<String, Object> eventData = new HashMap<String, Object>();
+        eventData.put("name", event);
+        eventData.put("person_id", personID);
+        eventData.put("organisation_id", organisationID);
+        eventData.put("channel", channel);
+        eventData.put("device", Constants.EventDevice.ANDROID);
+        eventData.put("os", Constants.EventChannel.MOBILE);
+
+        Event even = new Event(eventData);
         Map<String, Object> data = new HashMap<String, Object>();
-        data.put("name", event);
-        data.put("person_id", personID);
-        data.put("organisation_id", organisationID);
-        data.put("channel", channel);
-        data.put("device", Constants.EventDevice.ANDROID);
-        data.put("os", Constants.EventChannel.MOBILE);
+        data.put("event", even.data);
 
-        Request eventRequest = new Request(mToken, base, path, "", RequestMethod.POST, data);
+        Request eventRequest = new Request(this.mToken, base, path, null, RequestMethod.POST, data);
         HttpService service = new HttpService(eventRequest, listener);
         service.sendRequest();
 
@@ -149,7 +154,7 @@ public class EntracerAPI {
         Map<String, Object> data = new HashMap<String, Object>();
         data.put("organisation", organisation.data);
 
-        Request createOrganisationRequest = new Request(mToken, base, path, "", RequestMethod.POST, data);
+        Request createOrganisationRequest = new Request(this.mToken, base, path, null, RequestMethod.POST, data);
         HttpService service = new HttpService(createOrganisationRequest, listener);
         service.sendRequest();
     }

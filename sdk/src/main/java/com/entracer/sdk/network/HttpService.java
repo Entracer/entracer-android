@@ -12,6 +12,7 @@ import java.io.BufferedWriter;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
+import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
@@ -59,7 +60,7 @@ public class HttpService {
             throws Exception {
 
         EntracerLog.d("Request method: " + method + "url: " + requestUrl + " params: " + params.toString());
-        HttpsURLConnection connection = (HttpsURLConnection) requestUrl.openConnection();
+        HttpURLConnection connection = (HttpURLConnection) requestUrl.openConnection();  //TODO changed to HttpURLConnection
 
         // sets request method, headers
         connection.setRequestMethod(method);
