@@ -60,7 +60,7 @@ public class HttpService {
             throws Exception {
 
         EntracerLog.d("Request method: " + method + "url: " + requestUrl + " params: " + params.toString());
-        HttpURLConnection connection = (HttpURLConnection) requestUrl.openConnection();  //TODO changed to HttpURLConnection
+        HttpURLConnection connection = (HttpURLConnection) requestUrl.openConnection();  //TODO: Improve code for Http & Https urls dynamically
 
         // sets request method, headers
         connection.setRequestMethod(method);

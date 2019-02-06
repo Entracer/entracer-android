@@ -26,6 +26,7 @@ public class EntracerAPI {
     private String mToken;
     private String mPersonID;
     private String mOrganisationID;
+    private String baseUrl;
 
     /**
      * Private constructor to make instantiating directly prohibited.
@@ -34,6 +35,7 @@ public class EntracerAPI {
         this.mToken = null;
         this.mPersonID = null;
         this.mOrganisationID = null;
+        this.baseUrl = Constants.API.BASE_PATH;
     }
 
     /**
@@ -89,6 +91,22 @@ public class EntracerAPI {
     }
 
     /**
+     * Returns api baseUrl for entracer.
+     * @return baseUrl.
+     */
+    public String getBaseUrl() {
+        return baseUrl;
+    }
+
+    /**
+     * Sets api baseUrl for entracer.
+     * @return void.
+     */
+    public void setBaseUrl(String baseUrl) {
+        this.baseUrl = baseUrl;
+    }
+
+    /**
      * Sends trigger API request to trigger an event for a person and an organisation and notify the response listener.
      * @param event eventID.
      * @param personID
@@ -100,7 +118,7 @@ public class EntracerAPI {
 
     public void trigger(String event, String personID, String organisationID, String channel, ResponseListener listener) throws Exception {
 
-        String base = Constants.API.BASE_PATH;
+        String base = getBaseUrl();
         String path = Constants.API.VERSION + Constants.EndPoints.EVENTS + "/" + event + Constants.EndPoints.TRIGGER;
 
         Map<String, Object> eventData = new HashMap<String, Object>();
@@ -111,9 +129,9 @@ public class EntracerAPI {
         eventData.put("device", Constants.EventDevice.ANDROID);
         eventData.put("os", Constants.EventChannel.MOBILE);
 
-        Event even = new Event(eventData);
+        Event eventObj = new Event(eventData);
         Map<String, Object> data = new HashMap<String, Object>();
-        data.put("event", even.data);
+        data.put("event", eventObj.data);
 
         Request eventRequest = new Request(this.mToken, base, path, null, RequestMethod.POST, data);
         HttpService service = new HttpService(eventRequest, listener);
@@ -129,7 +147,7 @@ public class EntracerAPI {
      */
     public void createOrUpdate(Person person, ResponseListener listener) throws Exception {
 
-        String base = Constants.API.BASE_PATH;
+        String base = getBaseUrl();
         String path = Constants.API.VERSION + Constants.EndPoints.PEOPLE + Constants.EndPaths.CREATE_OR_UPDATE;
 
         Map<String, Object> data = new HashMap<String, Object>();
@@ -148,7 +166,7 @@ public class EntracerAPI {
      */
     public void createOrUpdate(Organisation organisation, ResponseListener listener) throws Exception {
 
-        String base = Constants.API.BASE_PATH;
+        String base = getBaseUrl();
         String path = Constants.API.VERSION + Constants.EndPoints.ORGANISATIONS + Constants.EndPaths.CREATE_OR_UPDATE;
 
         Map<String, Object> data = new HashMap<String, Object>();
