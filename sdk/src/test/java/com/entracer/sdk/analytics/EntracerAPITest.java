@@ -42,7 +42,7 @@ public class EntracerAPITest {
                 throw new AssertionError(request.responseObject.toString());
             }
         };
-        entracerAPI.trigger("926d26e91749095483d05713", "5bfe33df9bdf8e666f8e8e20", "5c3ee77c9bdf8e5f419e8d94", "Communicate", rl);
+        entracerAPI.trigger("3e706e751d4020e493820152", "5bfe33df9bdf8e666f8e8e20", "5c3ee77c9bdf8e5f419e8d94", "Communicate", rl);
 
 
     }
