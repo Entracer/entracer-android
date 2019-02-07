@@ -91,8 +91,7 @@ public class EntracerAPI {
     }
 
     /**
-     * Returns api baseUrl for entracer.
-     * @return baseUrl.
+     * @return active base url for api.
      */
     public String getBaseUrl() {
         return baseUrl;
@@ -100,7 +99,6 @@ public class EntracerAPI {
 
     /**
      * Sets api baseUrl for entracer.
-     * @return void.
      */
     public void setBaseUrl(String baseUrl) {
         this.baseUrl = baseUrl;
