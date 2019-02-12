@@ -18,8 +18,8 @@ import static org.junit.Assert.assertTrue;
 /**
  * Unit tests for entracer API
  */
-
 public class EntracerAPITest {
+
     EntracerAPI entracerAPI;
 
     @Before
@@ -41,9 +41,7 @@ public class EntracerAPITest {
                 throw new AssertionError(request.responseObject.toString());
             }
         };
-        entracerAPI.trigger("3e706e751d4020e493820152", "5bfe33df9bdf8e666f8e8e20", "5c3ee77c9bdf8e5f419e8d94", "Communicate", rl);
-
-
+        entracerAPI.trigger("Send message", "5bfe33df9bdf8e666f8e8e20", "5c3ee77c9bdf8e5f419e8d94", "Communicate", rl);
     }
 
     @Test
@@ -100,4 +98,3 @@ public class EntracerAPITest {
     }
 
 }
-
