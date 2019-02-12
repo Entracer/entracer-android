@@ -47,7 +47,7 @@ public class StringUtils {
 
         JSONObject jsonObject = new JSONObject(params);
 
-        return StringUtils.getPostDataString(jsonObject);
+        return jsonObject.toString();
     }
 
     /**
