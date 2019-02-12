@@ -95,7 +95,7 @@ public class HttpService {
         } else {
             this.responseCode = ((HttpURLConnection) connection).getResponseCode();
         }
-
+        
         if (this.responseCode == HttpsURLConnection.HTTP_OK) {
             // successful response status
             InputStream in = connection.getInputStream();
