@@ -1,5 +1,29 @@
 apply plugin: 'com.android.library'
 
+ext {
+    bintrayRepo = 'Entracer'
+    bintrayName = 'Entracer-SDK'
+
+    publishedGroupId = 'com.entracer.sdk'
+    libraryName = 'Entracer'
+    artifact = 'entracer'
+
+    libraryDescription = 'Entracer Android Library'
+
+    siteUrl = 'https://github.com/Entracer/entracer-android'
+    gitUrl = 'https://github.com/Entracer/entracer-android.git'
+
+    libraryVersion = '0.3.0'
+
+    developerId = 'Entracer'
+    developerName = 'Tharindu Madushanka'
+    developerEmail = 'tharindufit@gmail.com'
+
+    licenseName = 'The Apache Software License, Version 2.0'
+    licenseUrl = 'https://raw.githubusercontent.com/Entracer/entracer-android/master/LICENSE'
+    allLicenses = ["Apache-2.0"]
+}
+
 android {
     compileSdkVersion 26
 
@@ -25,3 +49,8 @@ dependencies {
 
     testImplementation 'junit:junit:4.12'
 }
+
+// Apply two scripts, used for building library files and uploading the built files to bintray
+// Reference: https://inthecheesefactory.com/blog/how-to-upload-library-to-jcenter-maven-central-as-dependency/en
+apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/installv1.gradle'
+apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/bintrayv1.gradle'
