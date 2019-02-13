@@ -13,7 +13,7 @@ ext {
     siteUrl = 'https://github.com/Entracer/entracer-android'
     gitUrl = 'https://github.com/Entracer/entracer-android.git'
 
-    libraryVersion = '0.3.0'
+    libraryVersion = '0.4.0'
 
     developerId = 'Entracer'
     developerName = 'Tharindu Madushanka'
