@@ -12,7 +12,9 @@ import java.io.BufferedWriter;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
+import java.net.HttpURLConnection;
 import java.net.URL;
+import java.net.URLConnection;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -59,10 +61,15 @@ public class HttpService {
             throws Exception {
 
         EntracerLog.d("Request method: " + method + "url: " + requestUrl + " params: " + params.toString());
-        HttpsURLConnection connection = (HttpsURLConnection) requestUrl.openConnection();
-
-        // sets request method, headers
-        connection.setRequestMethod(method);
+        URLConnection connection = null;
+        if (requestUrl.getProtocol().equals("https")) {
+            connection = (HttpsURLConnection) requestUrl.openConnection();
+            ((HttpsURLConnection) connection).setRequestMethod(method);
+        } else {
+            connection = (HttpURLConnection) requestUrl.openConnection();
+            ((HttpURLConnection) connection).setRequestMethod(method);
+        }
+        // sets request headers
         for (Map.Entry<String, String> entry : headers.entrySet())
         {
             connection.setRequestProperty(entry.getKey(), entry.getValue());
@@ -83,8 +90,12 @@ public class HttpService {
         writer.close();
         out.close();
 
-        this.responseCode = connection.getResponseCode();
-
+        if (requestUrl.getProtocol().equals("https")) {
+            this.responseCode = ((HttpsURLConnection) connection).getResponseCode();
+        } else {
+            this.responseCode = ((HttpURLConnection) connection).getResponseCode();
+        }
+        
         if (this.responseCode == HttpsURLConnection.HTTP_OK) {
             // successful response status
             InputStream in = connection.getInputStream();
